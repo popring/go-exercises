@@ -1,7 +1,9 @@
 package todo
 
 import (
+	"encoding/json"
 	"fmt"
+	"os"
 	"time"
 )
 
@@ -14,17 +16,18 @@ type Todo struct {
 
 type List struct {
 	Items  []Todo
-	nextID int
+	NextID int
 }
 
 func (l *List) Add(title string) {
-	l.nextID++
+	l.NextID++
 	t := Todo{
-		ID:        l.nextID,
+		ID:        l.NextID,
 		Title:     title,
 		CreatedAt: time.Now(),
 	}
 	l.Items = append(l.Items, t)
+	fmt.Println("added")
 }
 
 func (l *List) List() {
@@ -60,4 +63,29 @@ func (l *List) Delete(id int) error {
 		}
 	}
 	return fmt.Errorf("todo [%d] not found", id)
+}
+
+var fileName = "todo.json"
+
+func (l *List) Load() error {
+	fileByte, err := os.ReadFile(fileName)
+	if err != nil && !os.IsNotExist(err) {
+		fmt.Println("file error", err)
+		return err
+	}
+	if os.IsNotExist(err) {
+		return nil
+	}
+	err = json.Unmarshal(fileByte, l)
+	return err
+}
+
+func (l *List) Save() error {
+	data, err := json.MarshalIndent(l, "", "  ")
+	if err != nil {
+		fmt.Println("err: ", err)
+		return err
+	}
+	err = os.WriteFile(fileName, data, 0644)
+	return err
 }
