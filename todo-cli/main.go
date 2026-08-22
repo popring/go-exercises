@@ -7,7 +7,7 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/popring/go-todo-cli/todo"
+	"github.com/popring/go-exercises/todo-cli/todo"
 )
 
 func main() {
