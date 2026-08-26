@@ -1,1 +1,4 @@
-todo.json
+# go build binaries
+interface-lab/interface-lab
+todo-cli/todo-cli
+*.exe
