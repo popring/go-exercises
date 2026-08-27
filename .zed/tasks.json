@@ -1,0 +1,15 @@
+[
+  {
+    "label": "go run (current dir)",
+    "command": "go run .",
+    "cwd": "$ZED_DIRNAME",
+    "reveal": "always",
+    "use_new_terminal": false
+  },
+  {
+    "label": "go vet (current dir)",
+    "command": "go vet ./...",
+    "cwd": "$ZED_DIRNAME",
+    "reveal": "always"
+  }
+]

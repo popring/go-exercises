@@ -2,3 +2,4 @@
 interface-lab/interface-lab
 todo-cli/todo-cli
 *.exe
+todo-cli/todo.json
