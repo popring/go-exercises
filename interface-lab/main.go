@@ -53,6 +53,32 @@ func describe(x any) {
 	}
 }
 
+// ---------- 题 3：编译期断言 ----------
+// 一行"保险丝"：类型没实现接口，这一行当场编译报错（而不是在使用处才炸）
+
+var _ Shape = Circle{}
+var _ Shape = (*Rectangle)(nil)
+
+// 实验：把上面 Rectangle 的 Area() 注释掉 → go run . 看报错落在哪一行 → 恢复
+
+// ---------- 题 4：typed-nil ----------
+
+type MyErr struct{ Msg string }
+
+func (e *MyErr) Error() string { return e.Msg }
+
+// TODO 7: 故意踩坑版——fail 时才给 e 赋值，最后 return e
+func doWork(fail bool) error {
+	// var e *MyErr
+	if fail {
+		// 一行：给 e 赋一个 &MyErr{...}
+		return &MyErr{Msg: "xxx"}
+	}
+	return nil // ← 坑在这行
+}
+
+// TODO 8（踩完坑再改）: 修好 doWork——if 里直接 return &MyErr{...}，函数末尾 return 字面量 nil
+
 func main() {
 	runReference()
 
@@ -62,4 +88,10 @@ func main() {
 	describe(42)   // 期望：int 42
 	describe("hi") // 期望：string hi
 	describe(3.14) // 期望：其他类型
+
+	// 题 4：先预测这句会不会打印，再跑
+	err := doWork(false) // 注意传的是 false，"没出错"
+	if err != nil {
+		fmt.Println("居然有错？！", err)
+	}
 }
