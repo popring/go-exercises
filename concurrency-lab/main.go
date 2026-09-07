@@ -56,7 +56,7 @@ func parallelSum(nums []int) int {
 	go sumRange(nums[2*n:], out)
 
 	total := 0
-	for i := 0; i < 3; i++ {
+	for range 3 {
 		total += <-out
 	}
 
@@ -77,4 +77,6 @@ func main() {
 	fmt.Println("--- 题 3 ---")
 	nums := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	fmt.Println("sum =", parallelSum(nums)) // 期望 45
+
+	lesson2()
 }
