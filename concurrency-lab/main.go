@@ -79,4 +79,8 @@ func main() {
 	fmt.Println("sum =", parallelSum(nums)) // 期望 45
 
 	lesson2()
+
+	lesson3()
+
+	lesson4()
 }
